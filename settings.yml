@@ -1,0 +1,4 @@
+filter_type_box:
+  type: list
+  default: "tag-group-1|tag-group-2"
+  description: "tag groups defined here will appear in box format, all others will be dropdowns"

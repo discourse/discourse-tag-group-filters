@@ -1,0 +1,51 @@
+import Component from "@ember/component";
+import discourseComputed from "discourse-common/utils/decorators";
+import { ajax } from "discourse/lib/ajax";
+import { inject as service } from "@ember/service";
+
+export default Component.extend({
+  dropdownGroups: [],
+  boxGroups: [],
+
+  didInsertElement() {
+    this._super(...arguments);
+
+    function parseSetting(setting) {
+      const parsed = [];
+      setting.split("|").forEach((option) => {
+        const thing = option.trim();
+        parsed.push(thing);
+      });
+      return parsed;
+    }
+
+    // get box style tag groups from setting
+    let boxStyleSetting = parseSetting(settings.filter_type_box);
+
+    let boxGroups = [];
+    let dropdownGroups = [];
+
+    if (this.category.allowed_tag_groups.length) {
+      console.log(this.category.allowed_tag_groups);
+      // get allowed tag groups + tags for the category
+      return ajax(`/tag_groups/filter/search`, {
+        data: { names: this.category.allowed_tag_groups },
+      }).then((results) => {
+        results.results.forEach((object) => {
+          // separate results into box/dropdown styles
+          if (boxStyleSetting.indexOf(object["name"]) > -1) {
+            boxGroups.push(object);
+          } else {
+            dropdownGroups.push(object);
+          }
+        });
+
+        this.set("boxGroups", boxGroups);
+        this.set("dropdownGroups", dropdownGroups);
+      });
+    } else {
+      this.set("boxGroups", null);
+      this.set("dropdownGroups", null);
+    }
+  },
+});
