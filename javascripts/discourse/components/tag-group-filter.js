@@ -27,12 +27,20 @@ export default Component.extend({
         data: { names: allowedTagGroups },
       });
 
-      results.forEach((object) => {
+      results.forEach((tagGroup) => {
+        const group = {
+          name: tagGroup.name,
+          tags: tagGroup.tag_names.map((name) => ({
+            id: name,
+            name,
+          })),
+        };
+
         // separate results into box/dropdown styles
-        if (boxStyleSetting.includes(object["name"])) {
-          boxGroups.push(object);
+        if (boxStyleSetting.includes(group.name)) {
+          boxGroups.push(group);
         } else {
-          dropdownGroups.push(object);
+          dropdownGroups.push(group);
         }
       });
 

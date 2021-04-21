@@ -1,8 +1,7 @@
 {{#each dropdownGroups as |group|}}
   <div>
     <h4>{{group.name}}</h4>
-    <!-- combo box here -->
-    {{combo-box content=group.tag_names value="broken"}}
+    {{combo-box content=group.tags}}
   </div>
 {{/each}}
 
@@ -16,10 +15,10 @@
         </a>
       </li>
 
-      {{#each group.tag_names as |name|}}
+      {{#each group.tags as |tag|}}
         <li style="list-style: none; display: flex; background: hsl(215, 40%, 35%); margin-right: 0.6em; padding: 0.6em;">
-          <a href="/tags/c/{{category.slug}}/{{category.id}}/{{name}}" style="color: #fff;">
-            {{name}}
+          <a href="/tags/c/{{category.slug}}/{{category.id}}/{{tag.id}}" style="color: #fff;">
+            {{tag.name}}
           </a>
         </li>
       {{/each}}
