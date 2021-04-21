@@ -16,17 +16,15 @@ export default Component.extend({
 
     // get box style tag groups from setting
     let boxStyleSetting = parseSetting(settings.filter_type_box);
-
     let boxGroups = [];
     let dropdownGroups = [];
 
     if (this.category.allowed_tag_groups.length) {
-      console.log(this.category.allowed_tag_groups);
       // get allowed tag groups + tags for the category
       return ajax(`/tag_groups/filter/search`, {
         data: { names: this.category.allowed_tag_groups },
-      }).then((results) => {
-        results.results.forEach((object) => {
+      }).then(({ results }) => {
+        results.forEach((object) => {
           // separate results into box/dropdown styles
           if (boxStyleSetting.indexOf(object["name"]) > -1) {
             boxGroups.push(object);
