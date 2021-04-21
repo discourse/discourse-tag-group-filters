@@ -9,16 +9,16 @@
 {{#each boxGroups as |group|}}
   <div>
     <h4>{{group.name}}</h4>
-    <ul>
-      <li>
-        <a href="/c/{{category.slug}}/{{category.id}}">
+    <ul style="margin: 0; display: flex;">
+      <li style="list-style: none; display: flex; background: hsl(215, 40%, 35%); margin-right: 0.6em; padding: 0.6em;">
+        <a href="/c/{{category.slug}}/{{category.id}}" style="color: #fff;">
           all
         </a>
       </li>
 
       {{#each group.tag_names as |name|}}
-        <li>
-          <a href="/tags/c/{{category.slug}}/{{category.id}}/{{name}}">
+        <li style="list-style: none; display: flex; background: hsl(215, 40%, 35%); margin-right: 0.6em; padding: 0.6em;">
+          <a href="/tags/c/{{category.slug}}/{{category.id}}/{{name}}" style="color: #fff;">
             {{name}}
           </a>
         </li>
