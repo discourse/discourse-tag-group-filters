@@ -26,7 +26,7 @@ export default Component.extend({
       }).then(({ results }) => {
         results.forEach((object) => {
           // separate results into box/dropdown styles
-          if (boxStyleSetting.indexOf(object["name"]) > -1) {
+          if (boxStyleSetting.includes(object["name"])) {
             boxGroups.push(object);
           } else {
             dropdownGroups.push(object);
