@@ -1,32 +1,28 @@
-{{#each dropdownGroups as |dg| }}
+{{#each dropdownGroups as |group|}}
   <div>
-   <h4>{{dg.name}}</h4>
+    <h4>{{group.name}}</h4>
     <!-- combo box here -->
-  {{combo-box content=dg.tag_names value="broken" }}
+    {{combo-box content=group.tag_names value="broken"}}
   </div>
 {{/each}}
 
-
-{{#each boxGroups as |bg|}}
+{{#each boxGroups as |group|}}
   <div>
-       <h4>{{bg.name}}</h4>
-
+    <h4>{{group.name}}</h4>
     <ul>
-
       <li>
         <a href="/c/{{category.slug}}/{{category.id}}">
           all
         </a>
       </li>
-      
-      {{#each bg.tag_names as |t|}}
+
+      {{#each group.tag_names as |name|}}
         <li>
-          <a href="/tags/c/{{category.slug}}/{{category.id}}/{{t}}">
-            {{t}}
+          <a href="/tags/c/{{category.slug}}/{{category.id}}/{{name}}">
+            {{name}}
           </a>
         </li>
       {{/each}}
-
     </ul>
   </div>
 {{/each}}
