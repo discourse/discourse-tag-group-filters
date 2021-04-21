@@ -4,12 +4,7 @@ import { ajax } from "discourse/lib/ajax";
 import { inject as service } from "@ember/service";
 
 function parseSetting(setting) {
-  const parsed = [];
-  setting.split("|").forEach((option) => {
-    const thing = option.trim();
-    parsed.push(thing);
-  });
-  return parsed;
+  return setting.split("|").map((option) => option.trim());
 }
 
 export default Component.extend({
