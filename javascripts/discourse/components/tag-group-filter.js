@@ -1,7 +1,5 @@
 import Component from "@ember/component";
-import discourseComputed from "discourse-common/utils/decorators";
 import { ajax } from "discourse/lib/ajax";
-import { inject as service } from "@ember/service";
 
 function parseSetting(setting) {
   return setting.split("|").map((option) => option.trim());
