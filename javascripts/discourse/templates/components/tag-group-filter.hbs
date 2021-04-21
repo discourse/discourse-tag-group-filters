@@ -1,7 +1,10 @@
 {{#each dropdownGroups as |group|}}
   <div>
     <h4>{{group.name}}</h4>
-    {{combo-box content=group.tags}}
+    {{tag-selector
+      allowedTags=group.tags
+      currentCategory=category
+    }}
   </div>
 {{/each}}
 
