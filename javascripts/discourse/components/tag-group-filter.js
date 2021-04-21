@@ -11,31 +11,33 @@ export default Component.extend({
   dropdownGroups: [],
   boxGroups: [],
 
-  didInsertElement() {
+  async didInsertElement() {
     this._super(...arguments);
 
-    // get box style tag groups from setting
-    let boxStyleSetting = parseSetting(settings.filter_type_box);
-    let boxGroups = [];
-    let dropdownGroups = [];
+    const allowedTagGroups = this.category.allowed_tag_groups;
 
-    if (this.category.allowed_tag_groups.length) {
+    if (allowedTagGroups.length) {
+      // get box style tag groups from setting
+      const boxStyleSetting = parseSetting(settings.filter_type_box);
+      let boxGroups = [];
+      let dropdownGroups = [];
+
       // get allowed tag groups + tags for the category
-      return ajax(`/tag_groups/filter/search`, {
-        data: { names: this.category.allowed_tag_groups },
-      }).then(({ results }) => {
-        results.forEach((object) => {
-          // separate results into box/dropdown styles
-          if (boxStyleSetting.includes(object["name"])) {
-            boxGroups.push(object);
-          } else {
-            dropdownGroups.push(object);
-          }
-        });
-
-        this.set("boxGroups", boxGroups);
-        this.set("dropdownGroups", dropdownGroups);
+      const { results } = await ajax(`/tag_groups/filter/search`, {
+        data: { names: allowedTagGroups },
       });
+
+      results.forEach((object) => {
+        // separate results into box/dropdown styles
+        if (boxStyleSetting.includes(object["name"])) {
+          boxGroups.push(object);
+        } else {
+          dropdownGroups.push(object);
+        }
+      });
+
+      this.set("boxGroups", boxGroups);
+      this.set("dropdownGroups", dropdownGroups);
     } else {
       this.set("boxGroups", null);
       this.set("dropdownGroups", null);
