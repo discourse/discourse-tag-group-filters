@@ -3,21 +3,21 @@ import discourseComputed from "discourse-common/utils/decorators";
 import { ajax } from "discourse/lib/ajax";
 import { inject as service } from "@ember/service";
 
+function parseSetting(setting) {
+  const parsed = [];
+  setting.split("|").forEach((option) => {
+    const thing = option.trim();
+    parsed.push(thing);
+  });
+  return parsed;
+}
+
 export default Component.extend({
   dropdownGroups: [],
   boxGroups: [],
 
   didInsertElement() {
     this._super(...arguments);
-
-    function parseSetting(setting) {
-      const parsed = [];
-      setting.split("|").forEach((option) => {
-        const thing = option.trim();
-        parsed.push(thing);
-      });
-      return parsed;
-    }
 
     // get box style tag groups from setting
     let boxStyleSetting = parseSetting(settings.filter_type_box);
