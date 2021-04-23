@@ -55,11 +55,11 @@ export default Component.extend({
         }
         if (this.boxGroups) {
           // set active box state
-          if (this.tag) {
+          if (this.tag && document.getElementById("box-" + this.tag.id)) {
             document
               .getElementById("box-" + this.tag.id)
               .classList.add("active");
-          } else {
+          } else if (document.getElementById("box-all")) {
             document.getElementById("box-all").classList.add("active");
           }
         }
