@@ -5,14 +5,10 @@
         <h4>{{group.name}}</h4>
 
         <ul>
-          <li id="box-all">
-            <a href="/c/{{category.slug}}/{{category.id}}">
-              all
-            </a>
-          </li>
+          {{box-tag tag=(hash name="all") activeTag=this.tag category=category}}
 
           {{#each group.tags as |tag|}}
-            {{box-tag tag=tag category=category}}
+            {{box-tag tag=tag activeTag=this.tag category=category}}
           {{/each}}
         </ul>
       </div>
