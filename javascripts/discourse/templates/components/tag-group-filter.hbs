@@ -1,10 +1,9 @@
 {{#if boxGroups}}
-
   <div class="custom-box-groups">
-
     {{#each boxGroups as |group|}}
       <div class="custom-box-group">
         <h4>{{group.name}}</h4>
+
         <ul style="margin: 0; display: flex;">
           <li id="box-all">
             <a href="/c/{{category.slug}}/{{category.id}}">
@@ -13,7 +12,7 @@
           </li>
 
           {{#each group.tags as |tag|}}
-            <li id="box-{{tag.id}}" >
+            <li id="box-{{tag.id}}">
               <a href="/tags/c/{{category.slug}}/{{category.id}}/{{tag.id}}">
                 {{tag.name}}
               </a>
@@ -22,17 +21,15 @@
         </ul>
       </div>
     {{/each}}
-
   </div>
-
 {{/if}}
 
 {{#if dropdownGroups}}
   <div class="custom-dropdown-groups">
-
     {{#each dropdownGroups as |group|}}
       <div class="custom-dropdown-group">
         <h4>{{group.name}}</h4>
+
         {{tag-selector
           allowedTags=group.tags
           currentCategory=category
@@ -40,7 +37,5 @@
         }}
       </div>
     {{/each}}
-
   </div>
-
 {{/if}}
