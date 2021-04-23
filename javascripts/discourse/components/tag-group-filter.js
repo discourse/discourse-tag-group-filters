@@ -13,13 +13,11 @@ export default Component.extend({
   async didInsertElement() {
     this._super(...arguments);
 
-    let allowedTagGroups;
-
-    if (this.category) {
-      allowedTagGroups = this.category.allowed_tag_groups;
-    } else {
+    if (!this.category) {
       return;
     }
+
+    let allowedTagGroups = this.category.allowed_tag_groups;
 
     if (allowedTagGroups.length) {
       // get box style tag groups from setting
