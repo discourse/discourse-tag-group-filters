@@ -12,11 +12,7 @@
           </li>
 
           {{#each group.tags as |tag|}}
-            <li id="box-{{tag.id}}">
-              <a href="/tags/c/{{category.slug}}/{{category.id}}/{{tag.id}}">
-                {{tag.name}}
-              </a>
-            </li>
+            {{box-tag tag=tag category=category}}
           {{/each}}
         </ul>
       </div>
