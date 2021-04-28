@@ -16,6 +16,10 @@ export default Component.extend({
       return;
     }
 
+    if (!this.element || this.isDestroying || this.isDestroyed) {
+      return;
+    }
+
     let allowedTagGroups = this.category.allowed_tag_groups;
 
     if (allowedTagGroups.length) {

@@ -9,10 +9,14 @@ export default Component.extend({
     return tag.id === activeTag?.id;
   },
 
-  @discourseComputed("category", "tag")
-  path(category, tag) {
+  @discourseComputed("category", "tag", "activeTag")
+  path(category, tag, activeTag) {
     if (tag.id) {
-      return `/tags/c/${category.slug}/${category.id}/${tag.id}`;
+      if (this.tag && activeTag) {
+        return `/tags/intersection/${activeTag.id}/${tag.id}`;
+      } else {
+        return `/tags/c/${category.slug}/${category.id}/${tag.id}`;
+      }
     } else {
       return category.path;
     }
