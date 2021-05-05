@@ -9,6 +9,11 @@ export default Component.extend({
     return tag.id === activeTag?.id;
   },
 
+  @discourseComputed("tag")
+  dehyphenedTag(tag) {
+    return tag.name.replace(/-/g, " ");
+  },
+
   @discourseComputed("category", "tag", "activeTag")
   path(category, tag, activeTag) {
     if (tag.id) {
