@@ -14,14 +14,10 @@ export default Component.extend({
     return tag.name.replace(/-/g, " ");
   },
 
-  @discourseComputed("category", "tag", "activeTag")
-  path(category, tag, activeTag) {
+  @discourseComputed("category", "tag")
+  path(category, tag) {
     if (tag.id) {
-      if (this.tag && activeTag) {
-        return `/tags/intersection/${activeTag.id}/${tag.id}`;
-      } else {
-        return `/tags/c/${category.slug}/${category.id}/${tag.id}`;
-      }
+      return `/tags/c/${category.slug}/${category.id}/${tag.id}`;
     } else {
       return category.path;
     }
