@@ -10,7 +10,9 @@ export default TagDrop.extend({
   @discourseComputed("allowedTags", "tag")
   tagId(allowedTags, tag) {
     if (tag) {
-      if (this.allowedTags.some((tag) => tag.id === this.tag.id)) {
+      if (
+        this.allowedTags.some((allowedTag) => allowedTag.id === this.tag.id)
+      ) {
         return this.tag.id;
       } else {
         return;
