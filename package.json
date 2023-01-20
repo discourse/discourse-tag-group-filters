@@ -1,0 +1,7 @@
+{
+  "name": "discourse-tag-group-filters",
+  "private": true,
+  "devDependencies": {
+    "eslint-config-discourse": "^3.4.0"
+  }
+}

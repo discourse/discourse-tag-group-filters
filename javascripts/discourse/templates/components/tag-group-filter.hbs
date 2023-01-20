@@ -22,11 +22,7 @@
       <div class="custom-dropdown-group">
         <h4>{{group.name}}</h4>
 
-        {{tag-selector
-          allowedTags=group.tags
-          currentCategory=category
-          tag=tag
-        }}
+        {{tag-selector allowedTags=group.tags currentCategory=category tag=tag}}
       </div>
     {{/each}}
   </div>
