@@ -1,5 +1,5 @@
-import TagDrop, { ALL_TAGS_ID } from "select-kit/components/tag-drop";
 import discourseComputed from "discourse-common/utils/decorators";
+import TagDrop, { ALL_TAGS_ID } from "select-kit/components/tag-drop";
 
 export default TagDrop.extend({
   @discourseComputed("allowedTags")
