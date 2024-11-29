@@ -1,11 +1,11 @@
 import discourseComputed from "discourse-common/utils/decorators";
 import TagDrop, { ALL_TAGS_ID } from "select-kit/components/tag-drop";
 
-export default TagDrop.extend({
+export default class TagSelector extends TagDrop {
   @discourseComputed("allowedTags")
   content(allowedTags) {
     return [{ id: ALL_TAGS_ID, name: this.allTagsLabel }].concat(allowedTags);
-  },
+  }
 
   @discourseComputed("allowedTags", "tag")
   tagId(allowedTags, tag) {
@@ -18,5 +18,5 @@ export default TagDrop.extend({
         return;
       }
     }
-  },
-});
+  }
+}
