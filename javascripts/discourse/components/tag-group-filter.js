@@ -5,12 +5,12 @@ function parseSetting(setting) {
   return setting.split("|").map((option) => option.trim());
 }
 
-export default Component.extend({
-  dropdownGroups: [],
-  boxGroups: [],
+export default class TagGroupFilter extends Component {
+  dropdownGroups = [];
+  boxGroups = [];
 
   async didInsertElement() {
-    this._super(...arguments);
+    super.didInsertElement(...arguments);
 
     if (!this.category) {
       return;
@@ -56,5 +56,5 @@ export default Component.extend({
       this.set("boxGroups", null);
       this.set("dropdownGroups", null);
     }
-  },
-});
+  }
+}
