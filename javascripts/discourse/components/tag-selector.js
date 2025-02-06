@@ -1,4 +1,4 @@
-import discourseComputed from "discourse-common/utils/decorators";
+import discourseComputed from "discourse/lib/decorators";
 import TagDrop, { ALL_TAGS_ID } from "select-kit/components/tag-drop";
 
 export default class TagSelector extends TagDrop {
