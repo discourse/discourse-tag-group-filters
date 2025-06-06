@@ -22,4 +22,12 @@ export default class BoxTag extends Component {
       return category.path;
     }
   }
+
+  <template>
+    <li class={{if this.active "active"}}>
+      <a href={{this.path}}>
+        {{this.dehyphenedTag}}
+      </a>
+    </li>
+  </template>
 }
