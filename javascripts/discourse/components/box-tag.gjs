@@ -6,7 +6,7 @@ import discourseComputed from "discourse/lib/decorators";
 export default class BoxTag extends Component {
   @discourseComputed("tag", "activeTag")
   active(tag, activeTag) {
-    return tag.id === activeTag?.id;
+    return tag.name === activeTag?.name;
   }
 
   @discourseComputed("tag")
@@ -16,8 +16,8 @@ export default class BoxTag extends Component {
 
   @discourseComputed("category", "tag")
   path(category, tag) {
-    if (tag.id) {
-      return `/tags/c/${category.slug}/${category.id}/${tag.id}`;
+    if (tag.name) {
+      return `/tags/c/${category.slug}/${category.id}/${tag.name}`;
     } else {
       return category.path;
     }
