@@ -8,12 +8,12 @@ export default class TagSelector extends TagDrop {
   }
 
   @discourseComputed("allowedTags", "tag")
-  tagId(allowedTags, tag) {
+  tagName(allowedTags, tag) {
     if (tag) {
       if (
-        this.allowedTags.some((allowedTag) => allowedTag.id === this.tag.id)
+        this.allowedTags.some((allowedTag) => allowedTag.name === this.tag.name)
       ) {
-        return this.tag.id;
+        return this.tag.name;
       } else {
         return;
       }
