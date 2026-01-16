@@ -1,6 +1,7 @@
 import Component from "@ember/component";
-import { hash } from "@ember/helper";
 import { ajax } from "discourse/lib/ajax";
+import { i18n } from "discourse-i18n";
+import { ALL_TAGS_ID } from "select-kit/components/tag-drop";
 import BoxTag from "./box-tag";
 import TagSelector from "./tag-selector";
 
@@ -11,6 +12,10 @@ function parseSetting(setting) {
 export default class TagGroupFilter extends Component {
   dropdownGroups = [];
   boxGroups = [];
+
+  get allTag() {
+    return { id: ALL_TAGS_ID, name: i18n("tagging.all_tags") };
+  }
 
   async didInsertElement() {
     super.didInsertElement(...arguments);
@@ -37,12 +42,16 @@ export default class TagGroupFilter extends Component {
       });
 
       results.forEach((tagGroup) => {
+        // Backward compatibility for https://github.com/discourse/discourse/pull/36678
+        // which changes API response from tag_names (string[]) to tags (object[])
+        const tagSource = tagGroup.tags || tagGroup.tag_names || [];
         const group = {
           name: tagGroup.name,
-          tags: tagGroup.tag_names.map((name) => ({
-            id: name,
-            name,
-          })),
+          tags: tagSource.map((t) =>
+            typeof t === "string"
+              ? { id: t, name: t }
+              : { id: t.id, name: t.name }
+          ),
         };
 
         // separate results into box/dropdown styles
@@ -70,7 +79,7 @@ export default class TagGroupFilter extends Component {
 
             <ul>
               <BoxTag
-                @tag={{hash name="all"}}
+                @tag={{this.allTag}}
                 @activeTag={{this.tag}}
                 @category={{this.category}}
               />
