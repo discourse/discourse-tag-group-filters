@@ -36,13 +36,18 @@ export default class TagGroupFilter extends Component {
         data: { names: allowedTagGroups },
       });
 
+      // TODO(https://github.com/discourse/discourse/pull/36678): The string check can be
+      // removed using .discourse-compatibility once the PR is merged.
       results.forEach((tagGroup) => {
+        // Handle both old format (tag_names: string[]) and new format (tags: object[])
+        const tagSource = tagGroup.tags || tagGroup.tag_names || [];
         const group = {
           name: tagGroup.name,
-          tags: tagGroup.tag_names.map((name) => ({
-            id: name,
-            name,
-          })),
+          tags: tagSource.map((t) =>
+            typeof t === "string"
+              ? { id: t, name: t }
+              : { id: t.id, name: t.name }
+          ),
         };
 
         // separate results into box/dropdown styles
