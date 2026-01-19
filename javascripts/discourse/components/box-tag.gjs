@@ -1,11 +1,15 @@
 import Component from "@ember/component";
 import { tagName } from "@ember-decorators/component";
 import discourseComputed from "discourse/lib/decorators";
+import { ALL_TAGS_ID } from "select-kit/components/tag-drop";
 
 @tagName("")
 export default class BoxTag extends Component {
   @discourseComputed("tag", "activeTag")
   active(tag, activeTag) {
+    if (tag.id === ALL_TAGS_ID) {
+      return !activeTag?.name;
+    }
     return tag.name === activeTag?.name;
   }
 
@@ -16,7 +20,7 @@ export default class BoxTag extends Component {
 
   @discourseComputed("category", "tag")
   path(category, tag) {
-    if (tag.name) {
+    if (tag.id !== ALL_TAGS_ID) {
       return `/tags/c/${category.slug}/${category.id}/${tag.name}`;
     } else {
       return category.path;
