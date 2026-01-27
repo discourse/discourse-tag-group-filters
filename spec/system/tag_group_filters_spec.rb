@@ -2,7 +2,7 @@
 
 require_relative "page_objects/components/tag_group_filter"
 
-RSpec.describe "Tag group filters", type: :system do
+RSpec.describe "Tag group filters" do
   fab!(:tag) { Fabricate(:tag, name: "widgets") }
   fab!(:tag_group) { Fabricate(:tag_group, name: "Product", tags: [tag]) }
   fab!(:category) { Fabricate(:category, allowed_tag_groups: [tag_group.name]) }

@@ -7,8 +7,6 @@ module("Integration | Component | box-tag", function (hooks) {
   setupRenderingTest(hooks);
 
   test("generates path using tag name", async function (assert) {
-    const self = this;
-
     this.set("tag", { id: 1, name: "my-tag" });
     this.set("activeTag", null);
     this.set("category", { id: 5, slug: "general", path: "/c/general/5" });
@@ -16,9 +14,9 @@ module("Integration | Component | box-tag", function (hooks) {
     await render(
       <template>
         <BoxTag
-          @tag={{self.tag}}
-          @activeTag={{self.activeTag}}
-          @category={{self.category}}
+          @tag={{this.tag}}
+          @activeTag={{this.activeTag}}
+          @category={{this.category}}
         />
       </template>
     );
@@ -33,8 +31,6 @@ module("Integration | Component | box-tag", function (hooks) {
   });
 
   test("marks tag as active when names match", async function (assert) {
-    const self = this;
-
     this.set("tag", { id: 1, name: "my-tag" });
     this.set("activeTag", { id: 99, name: "my-tag" });
     this.set("category", { id: 5, slug: "general", path: "/c/general/5" });
@@ -42,9 +38,9 @@ module("Integration | Component | box-tag", function (hooks) {
     await render(
       <template>
         <BoxTag
-          @tag={{self.tag}}
-          @activeTag={{self.activeTag}}
-          @category={{self.category}}
+          @tag={{this.tag}}
+          @activeTag={{this.activeTag}}
+          @category={{this.category}}
         />
       </template>
     );
@@ -55,8 +51,6 @@ module("Integration | Component | box-tag", function (hooks) {
   });
 
   test("does not mark tag as active when only ids match", async function (assert) {
-    const self = this;
-
     this.set("tag", { id: 1, name: "my-tag" });
     this.set("activeTag", { id: 1, name: "different-tag" });
     this.set("category", { id: 5, slug: "general", path: "/c/general/5" });
@@ -64,9 +58,9 @@ module("Integration | Component | box-tag", function (hooks) {
     await render(
       <template>
         <BoxTag
-          @tag={{self.tag}}
-          @activeTag={{self.activeTag}}
-          @category={{self.category}}
+          @tag={{this.tag}}
+          @activeTag={{this.activeTag}}
+          @category={{this.category}}
         />
       </template>
     );
