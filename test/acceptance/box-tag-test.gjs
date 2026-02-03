@@ -6,8 +6,8 @@ import BoxTag from "../../discourse/components/box-tag";
 module("Integration | Component | box-tag", function (hooks) {
   setupRenderingTest(hooks);
 
-  test("generates path using tag name", async function (assert) {
-    this.set("tag", { id: 1, name: "my-tag" });
+  test("generates path using tag slug and id", async function (assert) {
+    this.set("tag", { id: 1, name: "my-tag", slug: "my-tag" });
     this.set("activeTag", null);
     this.set("category", { id: 5, slug: "general", path: "/c/general/5" });
 
@@ -25,14 +25,14 @@ module("Integration | Component | box-tag", function (hooks) {
       .dom("a")
       .hasAttribute(
         "href",
-        "/tags/c/general/5/my-tag",
-        "link uses tag name in URL path"
+        "/tags/c/general/5/my-tag/1",
+        "link uses tag slug and id in URL path"
       );
   });
 
   test("marks tag as active when names match", async function (assert) {
-    this.set("tag", { id: 1, name: "my-tag" });
-    this.set("activeTag", { id: 99, name: "my-tag" });
+    this.set("tag", { id: 1, name: "my-tag", slug: "my-tag" });
+    this.set("activeTag", { id: 99, name: "my-tag", slug: "my-tag" });
     this.set("category", { id: 5, slug: "general", path: "/c/general/5" });
 
     await render(
@@ -51,8 +51,8 @@ module("Integration | Component | box-tag", function (hooks) {
   });
 
   test("does not mark tag as active when only ids match", async function (assert) {
-    this.set("tag", { id: 1, name: "my-tag" });
-    this.set("activeTag", { id: 1, name: "different-tag" });
+    this.set("tag", { id: 1, name: "my-tag", slug: "my-tag" });
+    this.set("activeTag", { id: 1, name: "different-tag", slug: "different-tag" });
     this.set("category", { id: 5, slug: "general", path: "/c/general/5" });
 
     await render(

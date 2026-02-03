@@ -42,16 +42,13 @@ export default class TagGroupFilter extends Component {
       });
 
       results.forEach((tagGroup) => {
-        // Backward compatibility for https://github.com/discourse/discourse/pull/36678
-        // which changes API response from tag_names (string[]) to tags (object[])
-        const tagSource = tagGroup.tags || tagGroup.tag_names || [];
         const group = {
           name: tagGroup.name,
-          tags: tagSource.map((t) =>
-            typeof t === "string"
-              ? { id: t, name: t }
-              : { id: t.id, name: t.name }
-          ),
+          tags: tagGroup.tags.map((t) => ({
+            id: t.id,
+            name: t.name,
+            slug: t.slug || t.name,
+          })),
         };
 
         // separate results into box/dropdown styles
