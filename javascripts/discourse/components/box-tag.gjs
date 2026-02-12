@@ -21,7 +21,11 @@ export default class BoxTag extends Component {
   @discourseComputed("category", "tag")
   path(category, tag) {
     if (tag.id !== ALL_TAGS_ID) {
-      return `/tags/c/${category.slug}/${category.id}/${tag.name}`;
+      if (tag.name !== tag.id) {
+        return `/tags/c/${category.slug}/${category.id}/${tag.slug}/${tag.id}`;
+      } else {
+        return `/tags/c/${category.slug}/${category.id}/${tag.name}`;
+      }
     } else {
       return category.path;
     }
