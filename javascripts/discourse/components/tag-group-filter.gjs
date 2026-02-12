@@ -49,8 +49,8 @@ export default class TagGroupFilter extends Component {
           name: tagGroup.name,
           tags: tagSource.map((t) =>
             typeof t === "string"
-              ? { id: t, name: t }
-              : { id: t.id, name: t.name }
+              ? { id: t, name: t, slug: t }
+              : { id: t.id, name: t.name, slug: t.slug }
           ),
         };
 

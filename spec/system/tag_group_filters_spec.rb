@@ -25,7 +25,7 @@ RSpec.describe "Tag group filters" do
     dropdown.expand
     dropdown.select_row_by_name("widgets")
 
-    expect(page).to have_current_path("/tags/c/#{category.slug}/#{category.id}/widgets")
+    expect(page).to have_current_path("/tags/c/#{category.slug}/#{category.id}/widgets/#{tag.id}")
 
     dropdown.expand
     dropdown.select_row_by_value("all-tags")
@@ -44,7 +44,7 @@ RSpec.describe "Tag group filters" do
 
     tag_group_filter.click_box_tag("widgets")
 
-    expect(page).to have_current_path("/tags/c/#{category.slug}/#{category.id}/widgets")
+    expect(page).to have_current_path("/tags/c/#{category.slug}/#{category.id}/widgets/#{tag.id}")
     expect(tag_group_filter).to have_active_box_tag("widgets")
 
     tag_group_filter.click_box_tag("All tags")

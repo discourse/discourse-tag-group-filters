@@ -7,7 +7,7 @@ module("Integration | Component | box-tag", function (hooks) {
   setupRenderingTest(hooks);
 
   test("generates path using tag name", async function (assert) {
-    this.set("tag", { id: 1, name: "my-tag" });
+    this.set("tag", { id: 1, name: "my-tag", slug: "my-tag" });
     this.set("activeTag", null);
     this.set("category", { id: 5, slug: "general", path: "/c/general/5" });
 
@@ -25,13 +25,13 @@ module("Integration | Component | box-tag", function (hooks) {
       .dom("a")
       .hasAttribute(
         "href",
-        "/tags/c/general/5/my-tag",
+        "/tags/c/general/5/my-tag/1",
         "link uses tag name in URL path"
       );
   });
 
   test("marks tag as active when names match", async function (assert) {
-    this.set("tag", { id: 1, name: "my-tag" });
+    this.set("tag", { id: 1, name: "my-tag", slug: "my-tag" });
     this.set("activeTag", { id: 99, name: "my-tag" });
     this.set("category", { id: 5, slug: "general", path: "/c/general/5" });
 
