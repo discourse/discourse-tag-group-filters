@@ -1,33 +1,34 @@
+/* eslint-disable ember/no-classic-components */
 import Component from "@ember/component";
+import { computed } from "@ember/object";
 import { tagName } from "@ember-decorators/component";
-import discourseComputed from "discourse/lib/decorators";
-import { ALL_TAGS_ID } from "select-kit/components/tag-drop";
+import { ALL_TAGS_ID } from "discourse/select-kit/components/tag-drop";
 
 @tagName("")
 export default class BoxTag extends Component {
-  @discourseComputed("tag", "activeTag")
-  active(tag, activeTag) {
-    if (tag.id === ALL_TAGS_ID) {
-      return !activeTag?.name;
+  @computed("tag", "activeTag")
+  get active() {
+    if (this.tag.id === ALL_TAGS_ID) {
+      return !this.activeTag?.name;
     }
-    return tag.name === activeTag?.name;
+    return this.tag.name === this.activeTag?.name;
   }
 
-  @discourseComputed("tag")
-  dehyphenedTag(tag) {
-    return tag.name.replace(/-/g, " ");
+  @computed("tag")
+  get dehyphenedTag() {
+    return this.tag.name.replace(/-/g, " ");
   }
 
-  @discourseComputed("category", "tag")
-  path(category, tag) {
-    if (tag.id !== ALL_TAGS_ID) {
-      if (tag.name !== tag.id) {
-        return `/tags/c/${category.slug}/${category.id}/${tag.slug}/${tag.id}`;
+  @computed("category", "tag")
+  get path() {
+    if (this.tag.id !== ALL_TAGS_ID) {
+      if (this.tag.name !== this.tag.id) {
+        return `/tags/c/${this.category.slug}/${this.category.id}/${this.tag.slug}/${this.tag.id}`;
       } else {
-        return `/tags/c/${category.slug}/${category.id}/${tag.name}`;
+        return `/tags/c/${this.category.slug}/${this.category.id}/${this.tag.name}`;
       }
     } else {
-      return category.path;
+      return this.category.path;
     }
   }
 
