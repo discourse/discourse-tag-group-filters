@@ -4,7 +4,7 @@ import { i18n } from "discourse-i18n";
 
 export default class TagSelector extends TagDrop {
   @computed("allowedTags")
-  content() {
+  get content() {
     return [
       {
         id: ALL_TAGS_ID,
