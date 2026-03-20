@@ -1,7 +1,8 @@
+/* eslint-disable ember/no-classic-components, ember/require-tagless-components */
 import Component from "@ember/component";
 import { ajax } from "discourse/lib/ajax";
+import { ALL_TAGS_ID } from "discourse/select-kit/components/tag-drop";
 import { i18n } from "discourse-i18n";
-import { ALL_TAGS_ID } from "select-kit/components/tag-drop";
 import BoxTag from "./box-tag";
 import TagSelector from "./tag-selector";
 
