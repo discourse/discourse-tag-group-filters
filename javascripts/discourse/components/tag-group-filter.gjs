@@ -1,6 +1,8 @@
 /* eslint-disable ember/no-classic-components, ember/require-tagless-components */
 import Component from "@ember/component";
+import { service } from "@ember/service";
 import { ajax } from "discourse/lib/ajax";
+import Category from "discourse/models/category";
 import { ALL_TAGS_ID } from "discourse/select-kit/components/tag-drop";
 import { i18n } from "discourse-i18n";
 import BoxTag from "./box-tag";
@@ -11,6 +13,8 @@ function parseSetting(setting) {
 }
 
 export default class TagGroupFilter extends Component {
+  @service site;
+
   dropdownGroups = [];
   boxGroups = [];
 
@@ -29,7 +33,27 @@ export default class TagGroupFilter extends Component {
       return;
     }
 
+    const categoryId = this.category.id;
     let allowedTagGroups = this.category.allowed_tag_groups;
+
+    if (!Array.isArray(allowedTagGroups)) {
+      try {
+        const result = await Category.reloadById(categoryId);
+        const category = this.site.updateCategory(result.category);
+        const reloaded = category?.allowed_tag_groups;
+        allowedTagGroups = Array.isArray(reloaded) ? reloaded : [];
+      } catch {
+        allowedTagGroups = [];
+      }
+    }
+
+    if (
+      this.isDestroying ||
+      this.isDestroyed ||
+      this.category?.id !== categoryId
+    ) {
+      return;
+    }
 
     if (allowedTagGroups.length) {
       // get box style tag groups from setting
@@ -41,6 +65,14 @@ export default class TagGroupFilter extends Component {
       const { results } = await ajax(`/tag_groups/filter/search`, {
         data: { names: allowedTagGroups },
       });
+
+      if (
+        this.isDestroying ||
+        this.isDestroyed ||
+        this.category?.id !== categoryId
+      ) {
+        return;
+      }
 
       results.forEach((tagGroup) => {
         // Backward compatibility for https://github.com/discourse/discourse/pull/36678
