@@ -1,4 +1,4 @@
-import { render } from "@ember/test-helpers";
+import { render, settled } from "@ember/test-helpers";
 import { module, test } from "qunit";
 import sinon from "sinon";
 import Category from "discourse/models/category";
@@ -94,5 +94,54 @@ module("Integration | Component | tag-group-filter", function (hooks) {
     assert
       .dom(".custom-dropdown-group h4")
       .hasText("Product", "renders the filter from the preloaded category");
+  });
+
+  test("swaps the filters when the category changes", async function (assert) {
+    pretender.get("/tag_groups/filter/search", (request) => {
+      const names = request.queryParams.names ?? request.queryParams["names[]"];
+      const name = Array.isArray(names) ? names[0] : names;
+      return response({
+        results: [
+          { name, tags: [{ id: 1, name: "widgets", slug: "widgets" }] },
+        ],
+      });
+    });
+
+    this.set("category", { ...CATEGORY, allowed_tag_groups: ["Product"] });
+    this.set("tag", null);
+
+    await render(
+      <template>
+        <TagGroupFilter @category={{this.category}} @tag={{this.tag}} />
+      </template>
+    );
+
+    assert.dom(".custom-dropdown-group h4").hasText("Product");
+
+    this.set("category", {
+      id: 6,
+      name: "Support",
+      slug: "support",
+      path: "/c/support/6",
+      allowed_tag_groups: ["Region"],
+    });
+    await settled();
+
+    assert
+      .dom(".custom-dropdown-group h4")
+      .hasText("Region", "renders the new category's filters after switching");
+
+    this.set("category", {
+      id: 7,
+      name: "Empty",
+      slug: "empty",
+      path: "/c/empty/7",
+      allowed_tag_groups: [],
+    });
+    await settled();
+
+    assert
+      .dom(".custom-dropdown-group")
+      .doesNotExist("clears the filters for a category without tag groups");
   });
 });
